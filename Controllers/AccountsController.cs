@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -168,6 +169,22 @@ namespace Api.Controllers
                 AccessFailedCount = user.AccessFailedCount,
             });
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<UserDetailDto>>> GetUser()
+        {
+            var users = await _userManager.Users.Select(u => new UserDetailDto {
+                Id = u.Id,
+                Email = u.Email,
+                FullName = u.FullName,
+                Roles = _userManager.GetRolesAsync(u).Result.ToArray()
+            }).ToListAsync();
+
+            return Ok(users);
+        }
+
+     
 
     }
 }
