@@ -66,6 +66,7 @@ namespace Api.Controllers
         }
 
         //api/account/login
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDto>> Login(LoginDto loginDto)
         {
@@ -183,8 +184,6 @@ namespace Api.Controllers
 
             return Ok(users);
         }
-
-     
 
     }
 }
