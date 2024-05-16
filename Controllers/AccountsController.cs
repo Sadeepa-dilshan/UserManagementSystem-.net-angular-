@@ -12,6 +12,7 @@ using System.Text;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -29,6 +30,7 @@ namespace Api.Controllers
         }
 
         // api/accounts/register
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register(RegisterDto registerDto)
         {
